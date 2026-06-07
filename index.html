@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MASTER BAKERY — Panetteria Artigianale | Settimo Torinese</title>
+    <meta name="description" content="Master Bakery — Pane, pizza e dolci artigianali a Settimo Torinese. Farine macinate a pietra, lievito madre, lunga lievitazione. Dal 2010.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#0A0A0A',
+                        paper: '#FAFAFA',
+                        terra: '#C67B5C',
+                        clay: '#8E4A32',
+                        wheat: '#D4A574',
+                        smoke: '#E5E3E0',
+                        gold: '#C8963E',
+                    },
+                    fontFamily: {
+                        display: ['"Bebas Neue"', 'sans-serif'],
+                        body: ['"Source Sans 3"', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #0A0A0A;
+            --paper: #FAFAFA;
+            --terra: #C67B5C;
+            --gutter: clamp(1rem, 4vw, 4rem);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #FAFAFA; color: #0A0A0A; margin: 0; padding: 0; }
+        body.font-body { font-family: 'Source Sans 3', sans-serif; }
+        .bg-ink, [class*="bg-ink"] { background-color: #0A0A0A !important; }
+        .text-paper, [class*="text-paper"] { color: #FAFAFA !important; }
+        .bg-smoke { background-color: #E5E3E0 !important; }
+
+        /* Giant type */
+        .giant {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(5rem, 12vw, 14rem);
+            line-height: 0.88;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+        }
+        .big {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.2rem, 5vw, 4.5rem);
+            line-height: 0.95;
+            letter-spacing: -0.01em;
+            text-transform: uppercase;
+        }
+        .accent-line {
+            width: clamp(60px, 10vw, 120px);
+            height: 3px;
+            background: var(--terra);
+        }
+
+        /* Editorial grid */
+        .editorial-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: var(--gutter);
+        }
+        .span-2 { grid-column: span 2; }
+        .span-3 { grid-column: span 3; }
+        .span-full { grid-column: 1 / -1; }
+        @media (max-width: 768px) {
+            .editorial-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+            .span-2, .span-3 { grid-column: span 2; }
+        }
+        @media (max-width: 480px) {
+            .editorial-grid { grid-template-columns: 1fr; }
+            .span-2, .span-3 { grid-column: span 1; }
+        }
+
+        /* Pull quote */
+        .pull-quote {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            line-height: 1.05;
+            text-transform: uppercase;
+            border-left: 3px solid var(--terra);
+            padding-left: 1.5rem;
+            color: var(--ink);
+        }
+
+        /* Image reveal */
+        .img-reveal {
+            clip-path: inset(0 0 0 0);
+            transition: clip-path 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+        .img-reveal:hover {
+            clip-path: inset(2% 2% 2% 2%);
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* Nav */
+        .nav-blend { mix-blend-mode: difference; }
+
+        /* Marquee */
+        .marquee-track {
+            display: flex;
+            animation: scroll 30s linear infinite;
+            width: max-content;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .marquee-wrap { overflow: hidden; }
+
+        /* Image hover zoom */
+        .img-zoom { overflow: hidden; }
+        .img-zoom img { transition: transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1); }
+        .img-zoom:hover img { transform: scale(1.04); }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+            .reveal { opacity: 1; transform: none; }
+        }
+        .fade-delay-1 { transition-delay: 0.15s; }
+        .fade-delay-2 { transition-delay: 0.3s; }
+        .fade-delay-3 { transition-delay: 0.45s; }
+    </style>
+</head>
+<body class="font-body text-ink antialiased" style="background-color: #FAFAFA;">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 inset-x-0 z-50 mix-blend-difference text-white px-6 py-5">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="#top" class="flex items-center gap-3 cursor-pointer group">
+                <!-- Logo Mark -->
+                <svg class="h-9 w-9" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="2" width="44" height="44" rx="6" stroke="currentColor" stroke-width="2.5"/>
+                    <text x="24" y="32" text-anchor="middle" font-family="'Bebas Neue', sans-serif" font-size="26" font-weight="700" fill="currentColor" letter-spacing="-1">MB</text>
+                    <line x1="14" y1="10" x2="34" y2="10" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+                </svg>
+                <span class="font-display text-2xl tracking-tight">MASTER BAKERY</span>
+            </a>
+            <div class="hidden md:flex items-center gap-10 text-xs font-semibold tracking-widest uppercase">
+                <a href="#pane" class="hover:text-terra transition-colors cursor-pointer">Pane</a>
+                <a href="#prodotti" class="hover:text-terra transition-colors cursor-pointer">Prodotti</a>
+                <a href="#storia" class="hover:text-terra transition-colors cursor-pointer">Storia</a>
+                <a href="#contatti" class="hover:text-terra transition-colors cursor-pointer">Contatti</a>
+            </div>
+            <a href="#contatti" class="hidden md:block border border-white/30 px-5 py-2 text-xs font-bold tracking-widest uppercase hover:bg-white hover:text-ink transition-all duration-300 cursor-pointer">
+                Vieni a Trovarci
+            </a>
+        </div>
+    </nav>
+
+    <!-- HERO — Editorial Statement -->
+    <section id="top" class="min-h-screen flex items-center px-6 pt-24 pb-16 relative">
+        <!-- Sfondo: pane sul tavolo -->
+        <div class="absolute inset-0 pointer-events-none">
+            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1600&h=1000&fit=crop&auto=format&q=70" alt="" class="w-full h-full object-cover opacity-[0.08]" loading="eager">
+        </div>
+        <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(180deg, rgba(250,250,250,0.95) 0%, rgba(250,250,250,0.7) 50%, rgba(250,250,250,0.92) 100%);"></div>
+        <div class="max-w-7xl mx-auto w-full relative z-10">
+            <div class="editorial-grid items-end">
+                <!-- Logo Mark — prominent -->
+                <div class="span-full mb-8 reveal overflow-visible">
+                    <svg class="w-full max-w-[500px] h-auto" viewBox="0 0 220 80" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet">
+                        <!-- Geometric wheat stalks - left -->
+                        <line x1="26" y1="68" x2="30" y2="22" stroke="#C67B5C" stroke-width="2.5" stroke-linecap="round"/>
+                        <line x1="19" y1="68" x2="23" y2="24" stroke="#C67B5C" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+                        <line x1="12" y1="68" x2="16" y2="30" stroke="#C67B5C" stroke-width="1.3" stroke-linecap="round" opacity="0.45"/>
+                        <!-- Wheat grains -->
+                        <ellipse cx="30" cy="26" rx="3.5" ry="5.5" fill="#C67B5C" transform="rotate(-20 30 26)" opacity="0.8"/>
+                        <ellipse cx="23" cy="28" rx="2.8" ry="4.5" fill="#C67B5C" transform="rotate(-18 23 28)" opacity="0.6"/>
+                        <ellipse cx="16" cy="34" rx="2.2" ry="3.8" fill="#C67B5C" transform="rotate(-15 16 34)" opacity="0.4"/>
+                        <ellipse cx="30" cy="38" rx="3.5" ry="5.5" fill="#C67B5C" transform="rotate(20 30 38)" opacity="0.7"/>
+                        <ellipse cx="23" cy="40" rx="2.8" ry="4.5" fill="#C67B5C" transform="rotate(18 23 40)" opacity="0.5"/>
+                        <!-- Monogram MB -->
+                        <rect x="48" y="12" width="60" height="56" rx="8" stroke="#0A0A0A" stroke-width="3"/>
+                        <text x="78" y="52" text-anchor="middle" font-family="'Bebas Neue', sans-serif" font-size="40" font-weight="700" fill="#0A0A0A" letter-spacing="-1.5">MB</text>
+                        <!-- Decorative line -->
+                        <line x1="58" y1="22" x2="98" y2="22" stroke="#0A0A0A" stroke-width="1" opacity="0.3"/>
+                        <!-- Full name -->
+                        <text x="126" y="38" font-family="'Bebas Neue', sans-serif" font-size="24" font-weight="700" fill="#0A0A0A" letter-spacing="2">MASTER</text>
+                        <text x="126" y="62" font-family="'Bebas Neue', sans-serif" font-size="24" font-weight="700" fill="#C67B5C" letter-spacing="2">BAKERY</text>
+                    </svg>
+                </div>
+                <!-- Headline block -->
+                <div class="span-3">
+                    <div class="accent-line mb-8 reveal"></div>
+                    <h1 class="giant reveal fade-delay-1">
+                        L'ARTE<br>DEL PANE<br><span class="text-terra">ARTIGIANALE</span>
+                    </h1>
+                </div>
+                <!-- Side info -->
+                <div class="reveal fade-delay-2 space-y-6 pb-4">
+                    <p class="text-ink/60 text-sm leading-relaxed">
+                        Panetteria e pasticceria indipendente.<br>
+                        Settimo Torinese, dal 2010.
+                    </p>
+                    <div class="flex gap-2 text-xs font-bold tracking-widest uppercase">
+                        <span class="text-terra">★</span> 4.8/5
+                    </div>
+                </div>
+                <!-- Image -->
+                <div class="span-2 img-zoom reveal fade-delay-3">
+                    <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=900&h=600&fit=crop&auto=format&q=85"
+                         alt="Pane artigianale Master Bakery"
+                         class="w-full h-[50vh] object-cover"
+                         loading="eager" width="900" height="600">
+                </div>
+                <!-- Pull Quote -->
+                <div class="span-2 reveal fade-delay-3 flex items-end">
+                    <div class="pull-quote">
+                        Ogni notte impastiamo.<br>Ogni mattina sforniamo.<br>Da quattordici anni.
+                    </div>
+                </div>
+            </div>
+            <!-- Scroll indicator -->
+            <div class="mt-16 text-center reveal">
+                <a href="#pane" class="inline-block animate-bounce cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-terra" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+                </a>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- PANE — Sfondo impasto/farina -->
+    <section id="pane" class="py-24 md:py-36 px-6 relative">
+        <div class="absolute inset-0 pointer-events-none">
+            <img src="https://images.unsplash.com/photo-1532634993-15f421e42ec0?w=1600&h=1000&fit=crop&auto=format&q=70" alt="" class="w-full h-full object-cover opacity-[0.1]" loading="lazy">
+        </div>
+        <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(180deg, rgba(250,250,250,0.96) 0%, rgba(250,250,250,0.6) 50%, rgba(250,250,250,0.96) 100%);"></div>
+        <div class="relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="editorial-grid items-center">
+                <div class="span-2 reveal">
+                    <span class="text-terra font-bold text-xs tracking-widest uppercase">La Nostra Filosofia</span>
+                    <h2 class="big mt-4">Fatto a Mano.<br>Lievitazione Lenta.<br>Farina di Pietra.</h2>
+                    <p class="mt-8 text-ink/60 leading-relaxed max-w-md">
+                        Niente scorciatoie. Usiamo <strong>lievito madre</strong> rinfrescato ogni giorno, farine macinate a pietra e
+                        <strong>minimo 24 ore</strong> di lievitazione. Il risultato è un pane digeribile, fragrante, che sa di buono.
+                    </p>
+                    <div class="mt-8 flex flex-wrap gap-8 text-sm font-bold tracking-widest uppercase">
+                        <div><span class="text-terra text-4xl font-display block">100%</span> Farine Italiane</div>
+                        <div><span class="text-terra text-4xl font-display block">24H</span> Lievitazione</div>
+                        <div><span class="text-terra text-4xl font-display block">0</span> Additivi</div>
+                    </div>
+                </div>
+                <div class="span-2 img-zoom reveal fade-delay-1">
+                    <img src="https://images.unsplash.com/photo-1532634993-15f421e42ec0?w=700&h=900&fit=crop&auto=format&q=85"
+                         alt="Impasto artigianale" class="w-full h-[70vh] object-cover" loading="lazy" width="700" height="900">
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-wrap border-y border-ink/10 py-4 my-4">
+        <div class="marquee-track">
+            <span class="font-display text-4xl md:text-6xl px-8 text-terra">PANETTERIA</span>
+            <span class="font-display text-4xl md:text-6xl px-8 text-ink">PASTICCERIA</span>
+            <span class="font-display text-4xl md:text-6xl px-8 text-terra">PIZZA AL TAGLIO</span>
+            <span class="font-display text-4xl md:text-6xl px-8 text-ink">CORNETTI</span>
+            <span class="font-display text-4xl md:text-6xl px-8 text-terra">TORTE</span>
+            <span class="font-display text-4xl md:text-6xl px-8 text-ink">PANETTERIA</span>
+            <span class="font-display text-4xl md:text-6xl px-8 text-terra">PASTICCERIA</span>
+            <span class="font-display text-4xl md:text-6xl px-8 text-ink">PIZZA AL TAGLIO</span>
+            <span class="font-display text-4xl md:text-6xl px-8 text-terra">CORNETTI</span>
+            <span class="font-display text-4xl md:text-6xl px-8 text-ink">TORTE</span>
+        </div>
+    </div>
+
+    <!-- PRODOTTI — Editorial Product Grid -->
+    <section id="prodotti" class="py-24 md:py-36 px-6 relative">
+        <div class="absolute inset-0 pointer-events-none">
+            <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=1600&h=1000&fit=crop&auto=format&q=70" alt="" class="w-full h-full object-cover opacity-[0.08]" loading="lazy">
+        </div>
+        <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(180deg, rgba(250,250,250,0.97) 0%, rgba(250,250,250,0.55) 40%, rgba(250,250,250,0.97) 100%);"></div>
+        <div class="relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-20 reveal">
+                <span class="text-terra font-bold text-xs tracking-widest uppercase">Cosa Facciamo</span>
+                <h2 class="big mt-4 max-w-2xl">Pane, Pizza, Dolci.<br>Tre modi di fare la stessa cosa:<br><span class="text-terra">cose buone.</span></h2>
+            </div>
+
+            <!-- Feed-style product cards — full width alternating -->
+            <div class="space-y-32">
+                <!-- Pane -->
+                <div class="editorial-grid items-center reveal">
+                    <div class="span-2 img-zoom">
+                        <img src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=800&h=550&fit=crop&auto=format&q=85"
+                             alt="Pane a lievitazione naturale" class="w-full h-[55vh] object-cover" loading="lazy" width="800" height="550">
+                    </div>
+                    <div class="span-2 space-y-6 px-4">
+                        <span class="text-terra font-bold text-xs tracking-widest uppercase">01</span>
+                        <h3 class="big">Pane a<br>Lievitazione<br>Naturale</h3>
+                        <p class="text-ink/60 leading-relaxed max-w-sm">
+                            Filoni, pagnotte, focacce, ciabatte. Ogni forma ha la sua ricetta,
+                            ma tutte condividono la stessa cura: farina di pietra, lievito madre, pazienza.
+                        </p>
+                        <div class="flex flex-wrap gap-2 text-xs font-bold tracking-wider uppercase">
+                            <span class="border border-ink/20 px-3 py-1.5">Filone</span>
+                            <span class="border border-ink/20 px-3 py-1.5">Pagnotta</span>
+                            <span class="border border-ink/20 px-3 py-1.5">Focaccia</span>
+                            <span class="border border-ink/20 px-3 py-1.5">Integrale</span>
+                            <span class="border border-ink/20 px-3 py-1.5">Ai Cereali</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pizza -->
+                <div class="editorial-grid items-center reveal">
+                    <div class="span-2 space-y-6 px-4 md:order-1 order-2">
+                        <span class="text-terra font-bold text-xs tracking-widest uppercase">02</span>
+                        <h3 class="big">Pizza al<br>Taglio<br>Artigianale</h3>
+                        <p class="text-ink/60 leading-relaxed max-w-sm">
+                            Impasto ad alta idratazione, 48 ore di lievitazione, condimenti freschi.
+                            La pizza al taglio come dovrebbe essere: croccante sotto, morbida dentro.
+                        </p>
+                        <div class="flex flex-wrap gap-2 text-xs font-bold tracking-wider uppercase">
+                            <span class="border border-ink/20 px-3 py-1.5">Margherita</span>
+                            <span class="border border-ink/20 px-3 py-1.5">Marinara</span>
+                            <span class="border border-ink/20 px-3 py-1.5">Ortolana</span>
+                            <span class="border border-ink/20 px-3 py-1.5">Diavola</span>
+                            <span class="border border-ink/20 px-3 py-1.5">Stagionale</span>
+                        </div>
+                    </div>
+                    <div class="span-2 img-zoom md:order-2 order-1">
+                        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&h=550&fit=crop&auto=format&q=85"
+                             alt="Pizza al taglio" class="w-full h-[55vh] object-cover" loading="lazy" width="800" height="550">
+                    </div>
+                </div>
+
+                <!-- Dolci -->
+                <div class="editorial-grid items-center reveal">
+                    <div class="span-2 img-zoom">
+                        <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=800&h=550&fit=crop&auto=format&q=85"
+                             alt="Pasticceria artigianale" class="w-full h-[55vh] object-cover" loading="lazy" width="800" height="550">
+                    </div>
+                    <div class="span-2 space-y-6 px-4">
+                        <span class="text-terra font-bold text-xs tracking-widest uppercase">03</span>
+                        <h3 class="big">Dolci &<br>Pasticceria<br>Fresca</h3>
+                        <p class="text-ink/60 leading-relaxed max-w-sm">
+                            Cornetti fragranti, torte personalizzate, biscotteria secca, paste lievitate.
+                            Per la colazione, la merenda, e i giorni di festa.
+                        </p>
+                        <div class="flex flex-wrap gap-2 text-xs font-bold tracking-wider uppercase">
+                            <span class="border border-ink/20 px-3 py-1.5">Cornetti</span>
+                            <span class="border border-ink/20 px-3 py-1.5">Torte</span>
+                            <span class="border border-ink/20 px-3 py-1.5">Biscotti</span>
+                            <span class="border border-ink/20 px-3 py-1.5">Brioche</span>
+                            <span class="border border-ink/20 px-3 py-1.5">Paste</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- STORIA — Editorial Timeline con bagliore caldo -->
+    <section id="storia" class="py-24 md:py-36 px-6 bg-ink text-paper relative overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none">
+            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1600&h=1000&fit=crop&auto=format&q=70" alt="" class="w-full h-full object-cover opacity-[0.15]" loading="lazy">
+        </div>
+        <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(180deg, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.6) 50%, rgba(10,10,10,0.94) 100%);"></div>
+        <div class="absolute top-0 right-0 w-[600px] h-[600px] rounded-full blur-[120px] pointer-events-none" style="background: radial-gradient(circle, rgba(198,123,92,0.2) 0%, transparent 70%);"></div>
+        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full blur-[100px] pointer-events-none" style="background: radial-gradient(circle, rgba(200,150,62,0.15) 0%, transparent 70%);"></div>
+        <div class="relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="editorial-grid mb-20 reveal">
+                <div class="span-3">
+                    <span class="text-terra font-bold text-xs tracking-widest uppercase">Chi Siamo</span>
+                    <h2 class="big mt-4">Una Storia<br>di Farina,<br>Acqua e Fuoco.</h2>
+                </div>
+            </div>
+
+            <div class="editorial-grid">
+                <!-- Large image -->
+                <div class="span-2 img-zoom reveal">
+                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=700&h=500&fit=crop&auto=format&q=85"
+                         alt="Forno artigianale" class="w-full h-[40vh] object-cover" loading="lazy" width="700" height="500">
+                </div>
+                <!-- Story text -->
+                <div class="span-2 space-y-8 reveal fade-delay-1">
+                    <div class="accent-line"></div>
+                    <p class="text-paper/70 text-lg leading-relaxed">
+                        <strong class="text-white">Master Bakery</strong> nasce nel 2010 a Settimo Torinese dalla passione
+                        di una famiglia di fornai. Quattordici anni dopo, siamo ancora qui: stesso forno, stessa farina di pietra,
+                        stesso lievito madre.
+                    </p>
+                    <p class="text-paper/70 leading-relaxed">
+                        Non siamo una catena. Siamo un forno di quartiere dove il pane sa di pane, la pizza scrocchia,
+                        e i cornetti si rompono nel modo giusto. Ogni giorno impastiamo, formiamo, inforniamo. A mano.
+                    </p>
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-6 pt-4">
+                        <div><div class="font-display text-4xl text-terra">2010</div><div class="text-xs text-paper/40 mt-1 tracking-wider uppercase">Fondazione</div></div>
+                        <div><div class="font-display text-4xl text-terra">300+</div><div class="text-xs text-paper/40 mt-1 tracking-wider uppercase">Clienti/Giorno</div></div>
+                        <div><div class="font-display text-4xl text-terra">3</div><div class="text-xs text-paper/40 mt-1 tracking-wider uppercase">Generazioni</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS — Sfondo vetrina dolci -->
+    <section class="py-24 md:py-36 px-6 relative">
+        <div class="absolute inset-0 pointer-events-none">
+            <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=1600&h=1000&fit=crop&auto=format&q=70" alt="" class="w-full h-full object-cover opacity-[0.1]" loading="lazy">
+        </div>
+        <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(135deg, rgba(245,237,228,0.96) 0%, rgba(237,224,212,0.7) 40%, rgba(232,217,202,0.94) 100%);"></div>
+        <div class="relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="editorial-grid items-center">
+                <!-- Image -->
+                <div class="span-2 img-zoom reveal">
+                    <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=700&h=600&fit=crop&auto=format&q=85"
+                         alt="Vetrina pasticceria Master Bakery" class="w-full h-[50vh] object-cover" loading="lazy" width="700" height="600">
+                </div>
+                <!-- Quotes -->
+                <div class="span-2 space-y-12 reveal fade-delay-1">
+                    <div class="accent-line"></div>
+                    <h2 class="big">Cosa Dicono<br>i Nostri Clienti.</h2>
+                    <div class="space-y-4">
+                        <div class="flex text-terra text-xl">★★★★★</div>
+                        <p class="text-xl leading-snug font-light italic text-ink/70">"Il miglior pane di Settimo. Fragrante, croccante, digeribile. Ci vado ogni mattina da anni e non ha mai deluso."</p>
+                        <p class="text-xs font-bold tracking-widest uppercase text-terra">— Maria R., cliente dal 2014</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex text-terra text-xl">★★★★★</div>
+                        <p class="text-xl leading-snug font-light italic text-ink/70">"Ho ordinato la torta per il battesimo di mia figlia. Non solo bellissima, ma buonissima. Professionali e puntuali."</p>
+                        <p class="text-xs font-bold tracking-widest uppercase text-terra">— Luca B., cliente dal 2018</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex text-terra text-xl">★★★★★</div>
+                        <p class="text-xl leading-snug font-light italic text-ink/70">"Pizza al taglio eccezionale. Impasto leggero, ingredienti freschi. Finalmente un forno che fa le cose per bene."</p>
+                        <p class="text-xs font-bold tracking-widest uppercase text-terra">— Alessandra T., cliente dal 2016</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- CONTATTI — Clean, minimal -->
+    <section id="contatti" class="py-24 md:py-36 px-6 border-t border-ink/10 relative">
+        <div class="absolute inset-0 pointer-events-none">
+            <img src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=1600&h=1000&fit=crop&auto=format&q=70" alt="" class="w-full h-full object-cover opacity-[0.08]" loading="lazy">
+        </div>
+        <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(180deg, rgba(250,250,250,0.97) 0%, rgba(250,250,250,0.7) 50%, rgba(250,250,250,0.97) 100%);"></div>
+        <div class="relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="editorial-grid">
+                <div class="span-full mb-16 reveal">
+                    <span class="text-terra font-bold text-xs tracking-widest uppercase">Contatti</span>
+                    <h2 class="big mt-4">Vieni a Trovarci.</h2>
+                </div>
+
+                <!-- Info cards — brutalist style: hard borders, no round -->
+                <div class="span-2 reveal space-y-8">
+                    <div class="border-l-[3px] border-terra pl-6 space-y-2">
+                        <p class="text-xs font-bold tracking-widest uppercase text-ink/40">Indirizzo</p>
+                        <p class="text-xl font-semibold">Via Fratelli Rosselli, 1/A</p>
+                        <p class="text-ink/50">10036 Settimo Torinese (TO)</p>
+                    </div>
+                    <div class="border-l-[3px] border-terra pl-6 space-y-2">
+                        <p class="text-xs font-bold tracking-widest uppercase text-ink/40">Orari</p>
+                        <p><span class="font-semibold">Lun–Ven:</span> 7:00 – 13:30 / 16:00 – 19:30</p>
+                        <p><span class="font-semibold">Sab:</span> 7:00 – 13:30</p>
+                        <p><span class="font-semibold">Dom:</span> 8:00 – 12:30</p>
+                    </div>
+                    <div class="border-l-[3px] border-terra pl-6 space-y-2">
+                        <p class="text-xs font-bold tracking-widest uppercase text-ink/40">Telefono</p>
+                        <p class="text-xl font-semibold">+39 011 821 1457</p>
+                    </div>
+                    <a href="https://www.facebook.com/masterbakery.settimo/" target="_blank" rel="noopener"
+                       class="inline-flex items-center gap-3 border-2 border-ink px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-ink hover:text-paper transition-all duration-300 cursor-pointer">
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        Seguici su Facebook
+                    </a>
+                </div>
+
+                <!-- Map — hard edge, no radius -->
+                <div class="span-2 reveal fade-delay-1">
+                    <div class="h-[450px] border-2 border-ink overflow-hidden">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2809!2d7.681!3d45.140!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDXCsDA4JzI0LjAiTiA3wrA0MCc0OC4wIkU!5e0!3m2!1sit!2sit!4v1680000000000"
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Master Bakery — Via Fratelli Rosselli 1/A, Settimo Torinese"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FINALE — Immagine background + testo -->
+    <section class="relative py-24 md:py-40 px-6 bg-ink text-paper text-center overflow-hidden">
+        <!-- Background image with opacity -->
+        <div class="absolute inset-0 opacity-25">
+            <img src="https://images.unsplash.com/photo-1509365465985-25d11c17e812?w=1400&h=700&fit=crop&auto=format&q=80"
+                 alt="Prodotti da forno artigianali" class="w-full h-full object-cover" loading="lazy" width="1400" height="700">
+        </div>
+        <!-- Gradient overlay -->
+        <div class="absolute inset-0 bg-gradient-to-b from-ink/90 via-ink/70 to-ink"></div>
+        <div class="relative z-10 max-w-4xl mx-auto reveal">
+            <h2 class="giant text-white mb-8">TI ASPETTIAMO.</h2>
+            <p class="text-paper/50 text-lg max-w-md mx-auto mb-12">
+                Via Fratelli Rosselli 1/A, Settimo Torinese.<br>Aperti tutti i giorni.
+            </p>
+            <a href="https://www.facebook.com/masterbakery.settimo/" target="_blank" rel="noopener"
+               class="inline-flex items-center gap-3 border-2 border-terra text-terra px-10 py-5 text-sm font-bold tracking-widest uppercase hover:bg-terra hover:text-white transition-all duration-300 cursor-pointer">
+                Facebook @masterbakery.settimo ↗
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-ink text-paper/30 py-12 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-xs tracking-wider uppercase">
+            <div class="flex items-center gap-4">
+                <svg class="h-8 w-8" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="2" width="44" height="44" rx="6" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+                    <text x="24" y="32" text-anchor="middle" font-family="'Bebas Neue', sans-serif" font-size="24" font-weight="700" fill="currentColor" letter-spacing="-1" opacity="0.6">MB</text>
+                </svg>
+                <span class="font-display text-xl text-paper/80">MASTER BAKERY</span>
+                <span class="text-paper/15">|</span>
+                <span>Via Fratelli Rosselli 1/A, Settimo Torinese</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <span>P. IVA 11892360019</span>
+                <span class="text-paper/15">|</span>
+                <span>© 2026</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll reveal -->
+    <script>
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+        // Smooth scroll for all anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', function(e) {
+                e.preventDefault();
+                const t = document.querySelector(this.getAttribute('href'));
+                if (t) t.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
